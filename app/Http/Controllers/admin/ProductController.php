@@ -1,22 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Product;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+	
+	private $product;
+	
+	private $dir = 'admin.Products.';
+	
+	public function __construct(Product $product) {
+		
+		$this->product = $product;
+// 		$this->dir = 'admin.Products.';
+	}
+	
     public function index()
     {
         //
-        return "i'm admin!";
+    	return view($this->dir . 'list');
     }
 
     /**
@@ -27,6 +39,7 @@ class ProductsController extends Controller
     public function create()
     {
         //
+       return view($this->dir . 'edit');
     }
 
     /**
@@ -35,9 +48,12 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
         //
+        $this->product->create($request->all());
+        
+        return redirect()->route('admin.products');
     }
 
     /**
@@ -46,9 +62,13 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product, $id)
     {
         //
+        $product = $this->product->whereId($id)->first();
+        
+        return view($this.dir . 'show', compact('product'));
+    	
     }
 
     /**
@@ -60,6 +80,9 @@ class ProductsController extends Controller
     public function edit($id)
     {
         //
+    	$product = $this->product->whereId($id)->first();
+    	
+    	return view($this->dir . 'edit', compact('product'));
     }
 
     /**
@@ -72,6 +95,11 @@ class ProductsController extends Controller
     public function update(Request $request, $id)
     {
         //
+    	$product = $this->product->whereId($id)->first();
+    	
+    	$product->fill($request->input())->save();
+    	 
+    	return redirect()->route('admin.products');
     }
 
     /**

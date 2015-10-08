@@ -13,7 +13,11 @@
 
 
 Route::group(array('prefix' => 'admin'), function() {
-	Route::get('/products', 'admin\ProductsController@index');
+	Route::resource('products', 'Admin\ProductController', [
+		'names' =>[
+			'index' => 'admin.products',
+		]
+	]);
 });
 
 Route::get('/', function () {
@@ -21,3 +25,4 @@ Route::get('/', function () {
 });
 
 Route::get('/gps', 'GPSController@index');
+// Route::get('/gps', ['as'=>'gps' , 'uses'=>'GPSController@index']); naming route
