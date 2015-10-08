@@ -4,7 +4,7 @@
         <title>GPS Coordiantes</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
+		<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
         <style>
             html, body {
                 height: 100%;
