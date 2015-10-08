@@ -16,6 +16,7 @@ Route::group(array('prefix' => 'admin'), function() {
 	Route::resource('products', 'Admin\ProductController', [
 		'names' =>[
 			'index' => 'admin.products',
+			'create' => 'admin.products.create',
 		]
 	]);
 });

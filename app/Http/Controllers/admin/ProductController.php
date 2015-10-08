@@ -28,7 +28,9 @@ class ProductController extends Controller
     public function index()
     {
         //
-    	return view($this->dir . 'list');
+        $products = $this->product->all();
+    	
+    	return view($this->dir . 'index', compact('products'));
     }
 
     /**
