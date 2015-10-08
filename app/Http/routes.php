@@ -11,6 +11,11 @@
 |
 */
 
+
+Route::group(array('prefix' => 'admin'), function() {
+	Route::get('/products', 'admin\ProductsController@index');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
