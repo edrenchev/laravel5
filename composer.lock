@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "de8400d3d49e880e3e1fa727123d7d45",
-    "content-hash": "ad7660e0d344ea97306b12a57993acbf",
+    "hash": "43dae43c18bedb8b8e711007f40b13cf",
+    "content-hash": "bd4740dd1418d33e0012dfd761f5449f",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -539,6 +539,48 @@
                 }
             ],
             "time": "2015-09-03 17:16:48"
+        },
+        {
+            "name": "lavary/laravel-menu",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lavary/laravel-menu.git",
+                "reference": "bebce996ef08cf911da0139c30a2da03a2768326"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lavary/laravel-menu/zipball/bebce996ef08cf911da0139c30a2da03a2768326",
+                "reference": "bebce996ef08cf911da0139c30a2da03a2768326",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.0",
+                "illuminate/view": ">=5.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Lavary\\Menu\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lavary",
+                    "email": "mrl.8081@gmail.com"
+                }
+            ],
+            "description": "A quick way to create menus in Laravel 5",
+            "homepage": "https://github.com/lavary/laravel-menu",
+            "keywords": [
+                "laravel"
+            ],
+            "time": "2015-09-28 22:36:39"
         },
         {
             "name": "league/flysystem",
@@ -2783,16 +2825,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01"
+                "reference": "23af31f402993cfd94e99cbc4b782e9a78eb0e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/23af31f402993cfd94e99cbc4b782e9a78eb0e97",
+                "reference": "23af31f402993cfd94e99cbc4b782e9a78eb0e97",
                 "shasum": ""
             },
             "require": {
@@ -2830,7 +2872,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2014-10-06 09:23:50"
+            "time": "2015-06-21 15:11:22"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2972,7 +3014,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "lavary/laravel-menu": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

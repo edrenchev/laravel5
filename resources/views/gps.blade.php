@@ -1,3 +1,22 @@
+<?php 
+
+Menu::make('MyNavBar', function($menu){
+
+	$menu->add('Home');
+	$menu->add('About', 'about')->add('level1', 'level1'); // vlojeno menu
+	$menu->level1->divide();
+	$menu->about->add('customer', 'customer'); //vlojeno menu
+	$menu->add('services', 'services');
+	$menu->add('Contact', 'contact');
+
+});
+$menu = Menu::get('MyNavBar');
+
+echo $menu->asUl();
+
+// echo '<pre>'.print_r($menu->item('about')->children(), true).'</pre>';die();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
