@@ -1,4 +1,15 @@
 
+<?php 
+	if(count($errors) > 0) {
+		foreach ($errors->all() as $error) {
+			echo <<<EOD
+	<div>{$error}</div>
+EOD;
+		}
+		
+	}
+?>
+
 <?=Form::open(['route' => 'admin.products.store']);?>
 
 @include('admin.products.form')

@@ -11,18 +11,22 @@
 |
 */
 
+define('CONTROL_PANEL_PREFIX', 'admin');
+define('CONTROL_PANEL_FOLDER', 'Admin');
 
-Route::group(array('prefix' => 'admin'), function() {
-	Route::resource('products', 'Admin\ProductController', [
-		'names' =>[
-			'index' => 'admin.products',
-			'create' => 'admin.products.create',
-			'update' => 'admin.products.update',
-			'store' => 'admin.products.store',
-			'edit' => 'admin.products.edit',
-			'destroy' => 'admin.products.destroy',
-		]
-	]);
+Route::group(array('prefix' => CONTROL_PANEL_PREFIX), function() {
+	foreach (['products'=>'Product'] as $k=>$v) {
+		Route::resource('products', CONTROL_PANEL_FOLDER.'\\'.$v.'Controller', [
+			'names' =>[
+				'index' => CONTROL_PANEL_PREFIX.'.'.$k,
+				'create' => CONTROL_PANEL_PREFIX.'.'.$k.'.create',
+				'update' => CONTROL_PANEL_PREFIX.'.'.$k.'.update',
+				'store' => CONTROL_PANEL_PREFIX.'.'.$k.'.store',
+				'edit' => CONTROL_PANEL_PREFIX.'.'.$k.'.edit',
+				'destroy' => CONTROL_PANEL_PREFIX.'.'.$k.'.destroy',
+			]
+		]);
+	}
 });
 
 Route::get('/', function () {
