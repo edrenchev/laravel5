@@ -13,7 +13,7 @@ class ProductsRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class ProductsRequest extends Request
     {
         return [
             //
-        	'title' => 'required|max:60',
+        	'name' => 'required|max:60',
         	'group' => 'required|integer|min:0|max:128'
         ];
     }

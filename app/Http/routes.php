@@ -17,6 +17,10 @@ Route::group(array('prefix' => 'admin'), function() {
 		'names' =>[
 			'index' => 'admin.products',
 			'create' => 'admin.products.create',
+			'update' => 'admin.products.update',
+			'store' => 'admin.products.store',
+			'edit' => 'admin.products.edit',
+			'destroy' => 'admin.products.destroy',
 		]
 	]);
 });

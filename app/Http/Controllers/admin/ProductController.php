@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\Http\Requests\Admin\ProductsRequest;
 
 class ProductController extends Controller
 {
@@ -41,7 +42,7 @@ class ProductController extends Controller
     public function create()
     {
         //
-       return view($this->dir . 'edit');
+       return view($this->dir . 'create');
     }
 
     /**
@@ -50,10 +51,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Product $product)
+    public function store(ProductsRequest $request, Product $product)
     {
         //
-        $this->product->create($request->all());
+        
+        $product->create($request->all());
         
         return redirect()->route('admin.products');
     }
@@ -110,8 +112,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product,$id)
     {
         //
+        $product->whereId($id)->delete();
+        
+        return redirect()->route('admin.products');
+        
     }
 }
