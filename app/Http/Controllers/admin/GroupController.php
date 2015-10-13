@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Group;
 use App\Http\Requests\Admin\GroupRequest;
 
 class GroupController extends Controller
 {
-	private $controller;
-	private $controllerDir = 'admin.Group.';
-	private $controllerMainRoute = 'admin.group';
+	private $model;
+	private $controllerDir;
+	private $controllerMainRoute;
 	
-	public function __construct(Group $controller) {
+	public function __construct(Group $model, $dir = 'admin.Group.', $mainRoute = 'admin.group') {
 	
-		$this->controller = $controller;
-		// 		$this->dir = 'admin.group.';
+		$this->model = $model;
+
+		$this->controllerDir = $dir;
+		$this->controllerMainRoute = $mainRoute;
 	}
 	
     /**
@@ -26,9 +27,11 @@ class GroupController extends Controller
      */
     public function index()
     {
-		$data = $this->controller->all();
+		$data = $this->model->all();
+		
+		$route = $this->controllerMainRoute;
 		 
-		return view($this->controllerDir . 'index', compact('data'));
+		return view($this->controllerDir . 'index', compact('data', 'route'));
     }
 
     /**
@@ -48,9 +51,9 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GroupRequest $request, Group $controller)
+    public function store(GroupRequest $request)
     {
-    	$controller->create($request->all());
+    	$this->model->create($request->all());
     	
     	return redirect()->route($this->controllerMainRoute);
     }
@@ -74,7 +77,7 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-    	$data = $this->controller->whereId($id)->first();
+    	$data = $this->model->whereId($id)->first();
     	$route = $this->controllerMainRoute;
     	    	 
     	return view($this->controllerDir . 'edit', compact('data', 'route'));
@@ -89,9 +92,9 @@ class GroupController extends Controller
      */
     public function update(GroupRequest $request, $id)
     {
-        $controller = $this->controller->whereId($id)->first();
+        $model = $this->model->whereId($id)->first();
     	
-    	$controller->fill($request->input())->save();
+    	$model->fill($request->input())->save();
     	 
     	return redirect()->route($this->controllerMainRoute);
     }
@@ -102,9 +105,9 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Group $controller, $id)
+    public function destroy($id)
     {
-        $controller->whereId($id)->delete();
+        $this->model->whereId($id)->delete();
         
         return redirect()->route($this->controllerMainRoute);
     }

@@ -13,7 +13,7 @@ class PlaceRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class PlaceRequest extends Request
     public function rules()
     {
         return [
-            //
+           'lat' => 'required',        	
+           'lng' => 'required',    
+           'name' => 'required',    	
+           'address' => 'required',       	
         ];
     }
 }

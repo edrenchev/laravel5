@@ -16,7 +16,7 @@ class Prices extends Migration
         	$table->engine = 'MyISAM';
             $table->increments('id');
             $table->integer('product_id');
-            $table->integer('lacation_id');
+            $table->integer('place_id');
             $table->double('price', 10, 2);
             $table->timestamps();
         });

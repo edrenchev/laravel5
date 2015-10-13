@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
+use App\Http\Requests\Admin\PlaceRequest;
+use App\Place;
 use App\Http\Controllers\Controller;
 
 class PlaceController extends Controller
 {
+    private $model;
+	private $controllerDir;
+	private $controllerMainRoute;
+	
+	public function __construct(Place $model, $dir = 'admin.Place.', $mainRoute = 'admin.place') {
+	
+		$this->model = $model;
+
+		$this->controllerDir = $dir;
+		$this->controllerMainRoute = $mainRoute;
+	}
+	
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +27,11 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        //
+		$data = $this->model->all();
+		 
+		$route = $this->controllerMainRoute;
+		 
+		return view($this->controllerDir . 'index', compact('data', 'route'));
     }
 
     /**
@@ -25,7 +41,8 @@ class PlaceController extends Controller
      */
     public function create()
     {
-        //
+    	$route = $this->controllerMainRoute;
+        return view($this->controllerDir . 'create', compact('route'));
     }
 
     /**
@@ -34,9 +51,11 @@ class PlaceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PlaceRequest $request)
     {
-        //
+    	$this->model->create($request->all());
+    	
+    	return redirect()->route($this->controllerMainRoute);
     }
 
     /**
@@ -58,7 +77,10 @@ class PlaceController extends Controller
      */
     public function edit($id)
     {
-        //
+    	$data = $this->model->whereId($id)->first();
+    	$route = $this->controllerMainRoute;
+    	    	 
+    	return view($this->controllerDir . 'edit', compact('data', 'route'));
     }
 
     /**
@@ -68,9 +90,13 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PlaceRequest $request, $id)
     {
-        //
+        $model = $this->model->whereId($id)->first();
+    	
+    	$model->fill($request->input())->save();
+    	 
+    	return redirect()->route($this->controllerMainRoute);
     }
 
     /**
@@ -81,6 +107,8 @@ class PlaceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->model->whereId($id)->delete();
+        
+        return redirect()->route($this->controllerMainRoute);
     }
 }

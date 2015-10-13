@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     //
+	protected $fillable = [
+			'id','lat','lng','name','address',
+	];
 }
