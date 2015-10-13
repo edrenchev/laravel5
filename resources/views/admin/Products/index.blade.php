@@ -2,7 +2,7 @@
 
 echo '<div><a href="'.route('admin.products.create').'">create new</a></div><br/>';
 
-foreach ($products as $product) {
+foreach ($data as $product) {
 	
 	$url = route('admin.products.edit', $product->id);
 	

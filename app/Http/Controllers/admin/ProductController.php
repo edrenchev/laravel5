@@ -2,38 +2,37 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
-use App\Http\Requests\Admin\ProductsRequest;
+use App\Http\Requests\Admin\ProductRequest;
 use DB;
 
 class ProductController extends Controller
 {
+    private $model;
+	private $controllerDir;
+	private $controllerMainRoute;
+	
+	public function __construct(Product $model, $dir = 'admin.Product.', $mainRoute = 'admin.product') {
+	
+		$this->model = $model;
+
+		$this->controllerDir = $dir;
+		$this->controllerMainRoute = $mainRoute;
+	}
+	
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-	
-	private $product;
-	
-	private $dir = 'admin.Products.';
-	private $route = 'admin.products';
-	
-	public function __construct(Product $product) {
-		
-		$this->product = $product;
-// 		$this->dir = 'admin.Products.';
-	}
-	
     public function index()
     {
-        //
-        $products = $this->product->all();
-    	
-    	return view($this->dir . 'index', compact('products'));
+		$data = $this->model->all();
+		
+		$route = $this->controllerMainRoute;
+		 
+		return view($this->controllerDir . 'index', compact('data', 'route'));
     }
 
     /**
@@ -43,10 +42,13 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
-       $groups = DB::select("SELECT * FROM groups");
-   
-       return view($this->dir . 'create', ['route'=>$this->route, 'groups'=>$groups]);
+    	$route = $this->controllerMainRoute;
+    	
+    	$groups = DB::select("SELECT * FROM groups");
+    	
+    	$places = DB::select("SELECT * FROM places");
+    	
+        return view($this->controllerDir . 'create', compact('route', 'groups', 'places'));
     }
 
     /**
@@ -55,13 +57,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductsRequest $request, Product $product)
+    public function store(ProductRequest $request)
     {
-        //
-        
-        $product->create($request->all());
-        
-        return redirect()->route('admin.products');
+    	$this->model->create($request->all());
+    	
+    	return redirect()->route($this->controllerMainRoute);
     }
 
     /**
@@ -70,13 +70,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product, $id)
+    public function show($id)
     {
         //
-        $product = $this->product->whereId($id)->first();
-        
-        return view($this.dir . 'show', compact('product'));
-    	
     }
 
     /**
@@ -87,11 +83,15 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
-    	$product = $this->product->whereId($id)->first();
+    	$data = $this->model->whereId($id)->first();
+    	
+    	$route = $this->controllerMainRoute;
+    	
     	$groups = DB::select("SELECT * FROM groups");
     	
-    	return view($this->dir . 'edit', compact('product'), ['route'=>$this->route, 'groups'=>$groups]);
+    	$places = DB::select("SELECT * FROM places");
+    	    	 
+    	return view($this->controllerDir . 'edit', compact('data', 'route', 'groups', 'places'));
     }
 
     /**
@@ -101,14 +101,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductsRequest $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
-    	$product = $this->product->whereId($id)->first();
+        $model = $this->model->whereId($id)->first();
     	
-    	$product->fill($request->input())->save();
+    	$model->fill($request->input())->save();
     	 
-    	return redirect()->route('admin.products');
+    	return redirect()->route($this->controllerMainRoute);
     }
 
     /**
@@ -117,12 +116,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product,$id)
+    public function destroy($id)
     {
-        //
-        $product->whereId($id)->delete();
+        $this->model->whereId($id)->delete();
         
-        return redirect()->route('admin.products');
-        
+        return redirect()->route($this->controllerMainRoute);
     }
 }
