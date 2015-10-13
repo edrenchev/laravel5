@@ -15,8 +15,8 @@ define('CONTROL_PANEL_PREFIX', 'admin');
 define('CONTROL_PANEL_FOLDER', 'Admin');
 
 Route::group(array('prefix' => CONTROL_PANEL_PREFIX), function() {
-	foreach (['products'=>'Product'] as $k=>$v) {
-		Route::resource('products', CONTROL_PANEL_FOLDER.'\\'.$v.'Controller', [
+	foreach (['products'=>'Product', 'group'=>'Group'] as $k=>$v) {
+		Route::resource($k, CONTROL_PANEL_FOLDER.'\\'.$v.'Controller', [
 			'names' =>[
 				'index' => CONTROL_PANEL_PREFIX.'.'.$k,
 				'create' => CONTROL_PANEL_PREFIX.'.'.$k.'.create',

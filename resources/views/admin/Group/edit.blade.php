@@ -1,3 +1,4 @@
+
 <?php 
 	if(count($errors) > 0) {
 		foreach ($errors->all() as $error) {
@@ -9,11 +10,11 @@ EOD;
 	}
 ?>
 
-<?=Form::model($product, ['route' => ['admin.products.update',$product->id], 'method'=>'PATCH']);?>
-@include('admin.products.form')
+<?=Form::model($data, ['route' => [$route.'.update',$data->id], 'method'=>'PATCH']);?>
+@include($route.'.form')
 <?=Form::close();?>
 <br/>
-<?=deleteBtn(['admin.products.destroy',$product->id], 'DELETE');?>
+<?=deleteBtn([$route.'.destroy',$data->id], 'DELETE');?>
 
 create and edit items table <br/>
 <br/>

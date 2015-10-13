@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Http\Requests\Admin\ProductsRequest;
+use DB;
 
 class ProductController extends Controller
 {
@@ -19,6 +20,7 @@ class ProductController extends Controller
 	private $product;
 	
 	private $dir = 'admin.Products.';
+	private $route = 'admin.products';
 	
 	public function __construct(Product $product) {
 		
@@ -42,7 +44,9 @@ class ProductController extends Controller
     public function create()
     {
         //
-       return view($this->dir . 'create');
+       $groups = DB::select("SELECT * FROM groups");
+   
+       return view($this->dir . 'create', ['route'=>$this->route, 'groups'=>$groups]);
     }
 
     /**
@@ -85,8 +89,9 @@ class ProductController extends Controller
     {
         //
     	$product = $this->product->whereId($id)->first();
+    	$groups = DB::select("SELECT * FROM groups");
     	
-    	return view($this->dir . 'edit', compact('product'));
+    	return view($this->dir . 'edit', compact('product'), ['route'=>$this->route, 'groups'=>$groups]);
     }
 
     /**
@@ -96,7 +101,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductsRequest $request, $id)
     {
         //
     	$product = $this->product->whereId($id)->first();
