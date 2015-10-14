@@ -17,7 +17,7 @@ class Products extends Migration
         	$table->engine = 'MyISAM';
             $table->increments('id');
             $table->string('name', 60);
-            $table->tinyInteger('group');
+            $table->integer('group_id');
         });
     }
 

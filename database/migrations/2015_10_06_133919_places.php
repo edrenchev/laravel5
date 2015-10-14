@@ -15,8 +15,8 @@ class Places extends Migration
         Schema::create('places', function (Blueprint $table) {
         	$table->engine = 'MyISAM';
             $table->increments('id');
-            $table->float('lat', 10, 6);
-            $table->float('lng', 10, 6);
+            $table->float('lat', 10, 7);
+            $table->float('lng', 10, 7);
             $table->string('name', 255);
             $table->string('address', 255);
             $table->timestamps();
